@@ -32,7 +32,6 @@ export const LandingPage = () => {
 
   return (
     <>
-      <Header />
       <Hero />
       <Desc />
       <div className="mt-64">
