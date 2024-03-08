@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import pool from "./db.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(
@@ -12,10 +14,12 @@ app.use(
 );
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.get("/", async (req, res) => {
+  const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
+  res.json(booksInfo.rows);
+  res.send("Hello World this is Server");
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server is running on port 3000");
 });
