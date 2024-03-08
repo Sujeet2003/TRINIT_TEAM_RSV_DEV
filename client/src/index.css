@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gradient {
+    @apply bg-gradient-to-r from-pink-600 via-violet-500 to-blue-400;
+}
+
+.heroGradient {
+    @apply bg-gradient-to-r from-blue-950 to-[#800578];
+}
+
+.cardHolder  h1 {
+    font-size: 20px;
+    font-weight: bold;
+    
+}
