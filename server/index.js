@@ -15,12 +15,12 @@ app.use(
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  try {
-    const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
-    res.send("Hello this is server!");
-  } catch (error) {
-    console.error(error.message);
-  }
+    try {
+        const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
+        res.status.json({data : booksInfo})
+    } catch (error) {
+        console.error(error.message);
+    }
 });
 
 app.listen(process.env.PORT, () => {
