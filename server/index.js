@@ -15,8 +15,12 @@ app.use(
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
-  res.json(booksInfo.rows);
+    try {
+        const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
+        res.json(booksInfo.rows);
+    } catch (error) {
+        console.error(error.message);
+    }
   res.send("Hello World this is Server");
 });
 
