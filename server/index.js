@@ -17,7 +17,7 @@ app.use(express.json());
 app.get("/", async (req, res) => {
     try {
         const booksInfo = await pool.query("SELECT * FROM books WHERE id=$1", [1]);
-        res.status.json({data : booksInfo})
+        res.status(200).json({data : booksInfo})
     } catch (error) {
         console.error(error.message);
     }
