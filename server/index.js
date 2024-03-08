@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import pool from "./db.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(
@@ -18,6 +20,6 @@ app.get("/", async (req, res) => {
   res.send("Hello World this is Server");
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server is running on port 3000");
 });
