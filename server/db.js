@@ -5,7 +5,7 @@ dotenv.config();
 const { Pool } = pg;
 
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+  connectionString: process.env.DB_URL,
 });
 
 pool.connect((err) => {
