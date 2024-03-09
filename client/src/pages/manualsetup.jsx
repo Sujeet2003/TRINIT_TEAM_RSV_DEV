@@ -146,7 +146,7 @@ export const Manual = () => {
           className="flex flex-row items-center justify-center w-full mt-5 mb-5"
           onClick={AddQuestion}
         >
-          <button clas>Add Question</button>
+          <button>Add Question</button>
         </div>
         <div className="flex flex-row items-center justify-center text-purple-600">
           <button>Submit</button>
