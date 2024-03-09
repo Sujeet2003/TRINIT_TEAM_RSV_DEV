@@ -12,12 +12,14 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import axios from "../../api/axios";
 import Button from "@mui/material/Button";
+import Toast from "../components/Toast";
 
 const OCR = "/upload";
 const OCR1 = "/upload1";
 
 const CreateTestPage = () => {
   const [nextSlide, setNextSilde] = useState(true);
+  const [showToast, setShowToast] = useState(false);
   const [type, setType] = useState();
   const title = useRef();
   const paspercent = useRef();
@@ -34,8 +36,18 @@ const CreateTestPage = () => {
     setNextSilde(true);
   };
 
+  if(showToast){
+    setTimeout(() => {
+      <Toast>File Uploaded Successfully</Toast>
+    }, 3000);
+  }
+
   const QuestionHandler = (ev) => {
     setFile1(ev.target.files[0]);
+    setTimeout(() => {
+      setShowToast(true);
+    },3000);
+    setShowToast(false);
   };
 
   const AnswerHandler = (ev) => {

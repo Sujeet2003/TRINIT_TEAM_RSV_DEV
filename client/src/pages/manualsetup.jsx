@@ -88,7 +88,7 @@ export const Manual = () => {
   console.log(question);
 
   return (
-    <div className="flex flex-row items-center justify-center w-full bg-purple-100 min-h-[87vh]">
+    <div className="flex flex-row items-center justify-center w-full bg-purple-200 min-h-[87vh]">
       <div className="w-3/4 mt-5 mb-5">
         {question.map((questions, index) => {
           return (
