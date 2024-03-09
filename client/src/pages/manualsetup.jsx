@@ -99,6 +99,8 @@ export const Manual = () => {
                 onChange={questionHandle}
                 key={index}
                 maxRows={4}
+                variant="filled"
+                color="secondary"
               />
 
               <div className="flex flex-row flex-wrap items-center justify-around w-11/12 mt-5">
@@ -112,6 +114,8 @@ export const Manual = () => {
                         inputRef={opt}
                         onChange={optionHandle}
                         label={`Option ${optionindex + 1}`}
+                        variant="filled"
+                        color="secondary"
                       />
                     </>
                   );
@@ -132,6 +136,7 @@ export const Manual = () => {
                   inputRef={ans}
                   id={index}
                   color="success"
+                  variant="filled"
                 />
               </div>
             </div>
