@@ -4,6 +4,7 @@ import { LandingPage } from "./pages/landingpage";
 import { Layout } from "./Layout/frame";
 import { Manual } from "./pages/manualsetup";
 import CreateTestPage from "./pages/CreateTestPage";
+import {Link} from "react-router-dom"
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/create" element={<CreateTestPage />}/>
-          <Route path="/manual" element={<Manual />} />
+          <Route path="/create" element={<CreateTestPage />} />
+          <Route path="/custom" element={<Manual />} />
         </Route>
       </Routes>
     </BrowserRouter>
