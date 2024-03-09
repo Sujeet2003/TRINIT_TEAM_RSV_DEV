@@ -3,6 +3,11 @@ import cors from "cors";
 import pool from "./db.js";
 import multer from "multer";
 import dotenv from "dotenv";
+import path, { dirname } from "path";
+import fs from "fs";
+
+const UploadMiddleware = multer({ dest: "uploads/" });
+
 dotenv.config();
 
 const app = express();
@@ -14,8 +19,9 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-const storage = multer.memoryStorage(); // Store the file in memory
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage(); // Store the file in memory
+// const upload = multer({ storage: storage });
+
 app.use(express.json());
 
 app.get("/", async (req, res) => {
@@ -42,10 +48,44 @@ app.get("/", async (req, res) => {
 //   }
 // });
 
-app.post('/upload', async (req, res) => {
-  console.log("Hello");
-  res.status(200).json({data : "success"})
-})
+app.post("/upload", UploadMiddleware.single("pdfFile"), async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+  if (req.file === undefined)
+    res.status(200).json({ data: "No Data Found For Updation..." });
+  else {
+    try {
+      const { originalname, path } = req.file;
+      const parts = originalname.split(".");
+      const extension = parts[parts.length - 1];
+      const newPath = path + "." + extension;
+      fs.renameSync(path, newPath);
+      res.status(200).json({ data: newPath });
+    } catch (error) {
+      res.status(403).json({ data: error });
+    }
+  }
+});
+
+app.post("/upload1", UploadMiddleware.single("pdfFile1"), async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+  if (req.file === undefined)
+    res.status(200).json({ data: "No Data Found For Updation..." });
+  else {
+    try {
+      const { originalname, path } = req.file;
+      const parts = originalname.split(".");
+      const extension = parts[parts.length - 1];
+      const newPath = path + "." + extension;
+      fs.renameSync(path, newPath);
+      res.status(200).json({ data: newPath });
+    } catch (error) {
+      res.status(403).json({ data: error });
+    }
+  }
+});
+
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running on port 5000");
