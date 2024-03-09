@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 
@@ -6,18 +6,49 @@ export const Manual = () => {
   const [question, setQuestion] = useState([
     {
       question: "",
-      option: [{ Option1: "" }],
+      option: [{ Option: "" }],
     },
   ]);
+
+  const ques = useRef();
+  const opt = useRef();
 
   const AddQuestion = () => {
     setQuestion((prev) => [
       ...prev,
       {
         question: "",
-        option: [{ Option1: "" }],
+        option: [{ Option: "" }],
       },
     ]);
+  };
+
+  const questionHandle = (ev) => {
+    console.log(ev.target.id);
+    console.log(ques.current.value);
+    const index = ev.target.id;
+    setQuestion((prev) => {
+      const newArray = [...prev];
+      newArray[index] = {
+        ...newArray[index],
+        question: ques.current.value,
+      };
+      return newArray;
+    });
+  };
+
+  const optionHandle = (ev) => {
+    const Data = ev.target.id.split("..");
+    const newOption = question[Data[0]].option;
+    newOption[Data[1]].Option = opt.current.value;
+    setQuestion((prev) => {
+      const newArray = [...prev];
+      newArray[Data[0]] = {
+        ...newArray[Data[0]],
+        option: newOption,
+      };
+      return newArray;
+    });
   };
 
   const AddOption = (ev) => {
@@ -28,10 +59,7 @@ export const Manual = () => {
       const newArray = [...prev];
       newArray[index] = {
         ...newArray[index],
-        option: [
-          ...newArray[index].option,
-          { [`Option${question[index].option.length + 1}`]: "" },
-        ],
+        option: [...newArray[index].option, { Option: "" }],
       };
       return newArray;
     });
@@ -50,9 +78,11 @@ export const Manual = () => {
               <div className="flex flex-col items-center justify-center">
                 <TextField
                   className="w-full"
-                  id="outlined-multiline-flexible"
                   label="Multiline"
+                  inputRef={ques}
+                  id={index}
                   multiline
+                  onChange={questionHandle}
                   key={index}
                   maxRows={4}
                 />
@@ -64,9 +94,10 @@ export const Manual = () => {
                         <TextField
                           className="w-2/6"
                           required
-                          id="outlined-required"
+                          id={`${index}..${optionindex}`}
+                          inputRef={opt}
+                          onChange={optionHandle}
                           label={`Option ${optionindex + 1}`}
-                          defaultValue="Hello World"
                         />
                       </>
                     );
