@@ -37,7 +37,8 @@ function Header() {
 
   return (
     <AppBar position="static" sx={{
-        bgcolor:"black"
+        bgcolor:"#231631ff",
+        backdropFilter: 'blur(10px)',
       }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
