@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -10,16 +10,17 @@ import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 
 const OCR = "/upload";
+const OCR1 = "/upload1";
 
 const CreateTestPage = () => {
   const [nextSlide, setNextSilde] = useState(true);
+  const [type, setType] = useState();
+  const title = useRef();
+  const paspercent = useRef();
+  const duration = useRef();
 
-  const QuestionPaper = useRef();
-  const AnswerPaper = useRef();
-
-  const handleChange = (event) => {
-    console.log(event.target.value);
-  };
+  const [file1, setFile1] = useState();
+  const [file2, setFile2] = useState();
 
   const onNext = () => {
     setNextSilde(false);
@@ -29,27 +30,56 @@ const CreateTestPage = () => {
     setNextSilde(true);
   };
 
-  const QuestionHandler = () => {
-    console.log(QuestionPaper.current.value);
+  const QuestionHandler = (ev) => {
+    setFile1(ev.target.files[0]);
   };
 
-  const AnswerHandler = () => {
-    console.log(AnswerPaper.current.value);
+  const AnswerHandler = (ev) => {
+    setFile2(ev.target.files[0]);
   };
 
-  const UploadHandler = async () => {
-    const response = await axios.post(
-      OCR,
-      {
-        file1: QuestionPaper.current.value,
-        file2: AnswerPaper.current.value,
+  console.log(file1, file2);
+
+  const handleChange = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(title.current.value);
+    console.log(paspercent.current.value);
+    console.log(duration.current.value);
+    console.log(type);
+  };
+
+  const UploadHandler = async (ev) => {
+    ev.preventDefault();
+
+    const formData = new FormData();
+    formData.append("pdfFile", file1);
+
+    const formData1 = new FormData();
+    formData1.append("pdfFile1", file2);
+
+    console.log(formData);
+    console.log(formData1);
+
+    const response = await axios.post(OCR, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-      {
-        headers: {
-          "Content-Type": "Content-Type: multipart/form-data",
-        },
-      }
-    );
+    });
+
+    const responses = await axios.post(OCR1, formData1, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(response?.data?.data);
+    console.log(responses?.data?.data);
+
+    handleSubmit();
   };
 
   return (
@@ -65,46 +95,51 @@ const CreateTestPage = () => {
             Please enter the title for the test:
           </Typography>
           <div className="overflow-hidden">
-            <TextField
-              sx={{ margin: "0px 30px", width: "100%" }}
-              id="outlined-basic"
-              color="secondary"
-              label="Test Title"
-              fullWidth
-              variant="filled"
-            />
+            <form action="">
+              <TextField
+                sx={{ margin: "0px 30px", width: "100%" }}
+                id="outlined-basic"
+                color="secondary"
+                label="Test Title"
+                fullWidth
+                variant="filled"
+                inputRef={title}
+              />
 
-            <TextField
-              sx={{ margin: "0px 30px", width: "100%" }}
-              id="outlined-basic"
-              color="secondary"
-              label="Pass Percentage"
-              fullWidth
-              variant="filled"
-            />
+              <TextField
+                sx={{ margin: "0px 30px", width: "100%" }}
+                id="outlined-basic"
+                color="secondary"
+                label="Pass Percentage"
+                fullWidth
+                variant="filled"
+                inputRef={paspercent}
+              />
 
-            <TextField
-              sx={{ margin: "0px 30px", width: "100%" }}
-              id="outlined-basic"
-              color="secondary"
-              label="Duration"
-              fullWidth
-              variant="filled"
-            />
+              <TextField
+                sx={{ margin: "0px 30px", width: "100%" }}
+                id="outlined-basic"
+                color="secondary"
+                label="Duration"
+                fullWidth
+                variant="filled"
+                inputRef={duration}
+              />
 
-            <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              label="Age"
-              sx={{ width: "300px" }}
-              onChange={handleChange}
-              placeholder="Select The Test Type"
-            >
-              <MenuItem value={"public"}>Public</MenuItem>
-              <MenuItem value={"private"}>Private</MenuItem>
-            </Select>
-            <FormHelperText>With label + helper text</FormHelperText>
+              <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                label="Age"
+                sx={{ width: "300px" }}
+                onChange={handleChange}
+                placeholder="Select The Test Type"
+              >
+                <MenuItem value={"public"}>Public</MenuItem>
+                <MenuItem value={"private"}>Private</MenuItem>
+              </Select>
+              <FormHelperText>With label + helper text</FormHelperText>
+            </form>
           </div>
           <div className="flex flex-row items-center justify-end w-full">
             <button
@@ -128,7 +163,6 @@ const CreateTestPage = () => {
                 type="file"
                 name="images"
                 id="images"
-                ref={QuestionPaper}
                 onChange={QuestionHandler}
                 required="required"
               />
@@ -150,7 +184,6 @@ const CreateTestPage = () => {
                 type="file"
                 name="images"
                 id="images"
-                ref={AnswerPaper}
                 onChange={AnswerHandler}
                 required="required"
               />
