@@ -19,7 +19,7 @@
     width: 100%;
     padding: 30px;
     background: rgba(255, 255, 255, 0.2);
-    border: 2px dashed #ff6500;
+    border: 2px dashed #521656ff;
     text-align: center;
     transition: background 0.3s ease-in-out;
 
@@ -28,48 +28,10 @@
     }
   }
 
-  &:hover .file-dummy {
-    background: rgba(255, 255, 255, 0.1);
-  }
 
-  input[type="file"]:focus + .file-dummy {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline: -webkit-focus-ring-color auto 5px;
-  }
 
-  input[type="file"]:valid + .file-dummy {
-    border-color: rgba(0, 255, 0, 0.4);
-    background-color: rgba(0, 255, 0, 0.3);
-
-    .success {
-      display: inline-block;
-    }
-    .default {
-      display: none;
-    }
-  }
 }
 
-label {
-  font-weight: 500;
-  display: block;
-  margin: 4px 0;
-  text-transform: uppercase;
-  font-size: 13px;
-  overflow: hidden;
 
-  span {
-    float: right;
-    text-transform: none;
-    font-weight: 200;
-    line-height: 1em;
-    font-style: italic;
-    opacity: 0.8;
-  }
-}
 
-.form-group {
-  max-width: 500px;
-  margin: auto;
-  margin-bottom: 30px;
-}
+

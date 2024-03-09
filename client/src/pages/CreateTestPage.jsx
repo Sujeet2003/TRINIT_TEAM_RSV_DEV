@@ -1,13 +1,17 @@
-import React, { useReducer, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import FormHelperText from "@mui/material/FormHelperText";
 import "../css/CreateTestPage.css";
 import { Link } from "react-router-dom";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import axios from "../../api/axios";
+import Button from "@mui/material/Button";
 
 const OCR = "/upload";
 const OCR1 = "/upload1";
@@ -83,19 +87,22 @@ const CreateTestPage = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-full">
+    <div className="flex flex-row items-center justify-center w-full bg-purple-200 min-h-[87vh]">
       {nextSlide ? (
-        <div className="flex flex-col items-center justify-center w-10/12">
-          <div className="flex-col text-center">
-            <Typography sx={{ m: 2 }} variant="h4" component="h2" gutterBottom>
+        <div className="flex flex-col justify-center w-10/12">
+          <div className="flex-col">
+            <Typography sx={{ m: 2, fontWeight: "bold", color: "#521656ff", textShadow: "2px 2px #ffff" }} variant="h4" component="h2" gutterBottom>
               Welcome to the Test Creation Page
             </Typography>
           </div>
-          <Typography sx={{ m: 2 }} variant="h5" component="h2" gutterBottom>
-            Please enter the title for the test:
-          </Typography>
+          
           <div className="overflow-hidden">
             <form action="">
+              <Typography sx={{ m: 2 }}  
+                variant="h5"              
+                component="h2" gutterBottom>
+                Please enter the title for the test:
+              </Typography>
               <TextField
                 sx={{ margin: "0px 30px", width: "100%" }}
                 id="outlined-basic"
@@ -106,6 +113,11 @@ const CreateTestPage = () => {
                 inputRef={title}
               />
 
+              <Typography sx={{ m: 2 }}  
+                variant="h5"              
+                component="h2" gutterBottom>
+                Enter the passing percentage of the test:
+              </Typography>
               <TextField
                 sx={{ margin: "0px 30px", width: "100%" }}
                 id="outlined-basic"
@@ -116,6 +128,12 @@ const CreateTestPage = () => {
                 inputRef={paspercent}
               />
 
+              <Typography sx={{ m: 2 }}  
+                variant="h5"              
+                component="h2" gutterBottom>
+                Enter the duration of the test:
+              </Typography>
+
               <TextField
                 sx={{ margin: "0px 30px", width: "100%" }}
                 id="outlined-basic"
@@ -125,59 +143,59 @@ const CreateTestPage = () => {
                 variant="filled"
                 inputRef={duration}
               />
-
-              <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-              <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                label="Age"
-                sx={{ width: "300px" }}
-                onChange={handleChange}
-                placeholder="Select The Test Type"
-              >
-                <MenuItem value={"public"}>Public</MenuItem>
-                <MenuItem value={"private"}>Private</MenuItem>
-              </Select>
-              <FormHelperText>With label + helper text</FormHelperText>
-            </form>
-          </div>
-          <div className="flex flex-row items-center justify-end w-full">
-            <button
-              className="pt-2 pb-2 pl-5 pr-5 border-2 rounded-lg"
+              <div className="grid grid-cols-2">
+            <FormControl sx={{m:2}} color="secondary">
+                <FormLabel      id="demo-row-radio-buttons-group-label">Keep     your     test public/private</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  color="secondary"
+                >
+                  <FormControlLabel value="public" control={<Radio />}    label="Public" />
+                  <FormControlLabel value="private" control={<Radio />}    label="Private" />
+                </RadioGroup>
+            </FormControl>
+            <Button
+              className="gradient"
+              sx={{color: "white", width: "400px", height: "50px", margin: "25px 0px", display: "flex", gap:"10px"}}
+              variant="filled"
               onClick={onNext}
             >
-              Next
-            </button>
+              Next <ArrowCircleRightIcon />
+            </Button>
+          </div>
+            
+            </form>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center w-10/12">
+        <div>
           <form action="">
-            <div className="w-3/4 form-group file-area">
-              <label for="images">
-                Question PDF/Images{" "}
-                <span>Try To Upload A Image With Resolution.</span>
+            <div className="grid grid-cols-2">
+            <div className="form-group file-area h-40">
+              <label htmlFor="images" className="text-purple-900 font-semibold text-xl h-full">
+                Question PDF/Images 
               </label>
               <input
-                // ref={media}
+                // ref={media}  
                 type="file"
                 name="images"
                 id="images"
                 onChange={QuestionHandler}
                 required="required"
               />
-              <div class="file-dummy">
-                <div class="success">
+              <div className="file-dummy">
+                <div className="success">
                   Great, your files are selected. Keep on.
                 </div>
-                <div class="default">Please select a Question PDF/Images</div>
+                <div className="default">Please select a Question PDF/Images</div>
               </div>
             </div>
 
-            <div className="w-3/4 form-group file-area">
-              <label for="images">
+            <div className="form-group file-area h-40">
+              <label htmlFor="images" className="text-xl font-semibold text-purple-950 h-full">
                 Answer PDF/Images{" "}
-                <span>Try To Upload A Image With Resolution.</span>
               </label>
               <input
                 // ref={media}
@@ -187,32 +205,39 @@ const CreateTestPage = () => {
                 onChange={AnswerHandler}
                 required="required"
               />
-              <div class="file-dummy">
-                <div class="success">
+              <div className="file-dummy">
+                <div className="success">
                   Great, your files are selected. Keep on.
                 </div>
-                <div class="default">Please select a Answer PDF/Images</div>
+                <div className="default">Please select a Answer PDF/Images</div>
               </div>
             </div>
-            <button
+            </div>
+            <div className="flex gap-5 items-center">
+            <Button
               onClick={UploadHandler}
-              className="pt-2 pb-2 pl-5 pr-5 border-2 rounded-lg"
+              className="gradient"
+              sx={{color: 'white', px:4,}}
             >
               Create
-            </button>
+            </Button>
             <h1 className="mt-5 mb-5">OR</h1>
             <Link to={"/custom"}>
-              <button className="pt-3 pb-3 pl-5 pr-5 border-2 rounded-lg">
+              <Button color="secondary" className="pt-3 pb-3 pl-5 pr-5 border-2 rounded-lg">
                 Create A Custom Test
-              </button>
+              </Button>
             </Link>
-            <div className="flex flex-row items-center justify-start w-full">
-              <button
-                className="pt-2 pb-2 pl-5 pr-5 border-2 rounded-lg"
+            </div>
+            <div className="flex flex-row items-center justify-end w-full">
+              <Button
+                className="gradient"
+                variant="filled"
+                sx={{color: "white", display: "flex", gap:"10px"}}
                 onClick={onBack}
               >
+                <ArrowCircleLeftIcon />
                 Back
-              </button>
+              </Button>
             </div>
           </form>
         </div>
