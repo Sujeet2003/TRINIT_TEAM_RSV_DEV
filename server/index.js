@@ -62,13 +62,52 @@ app.post("/upload", UploadMiddleware.single("pdfFile"), async (req, res) => {
 
       const imgPath = newPath;
       console.log("Hello", imgPath);
-      const apiKey = "K86519444388957";
 
       try {
-        const apiResponse = await ocrSpace(imgPath, {
-          apiKey: "K86519444388957",
+        const res2 = await ocrSpace(imgPath, {
+          apiKey: process.env.OCR,
         });
-        res.status(200).json({ data: res2 });
+
+        let Strings;
+
+        res2.ParsedResults.map((t) => {
+          Strings += t.ParsedText;
+        });
+
+        console.log(Strings);
+
+        const prompt = `${JSON.stringify(
+          Strings.substring(0, 1800)
+        )} Convert OCR API text to JSON with questions and options, excluding the code Give in Array Of Objects .`;
+
+        const generationConfig = {
+          temperature: 0.9, // Controls randomness (higher = more creative, but less coherent)
+          topK: 1, // Select top K most likely words at each step
+          topP: 1, // Filter out low probability continuations
+          maxOutputTokens: 2048, // Maximum number of tokens to generate
+        };
+
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({
+          model: MODEL_NAME,
+          generationConfig,
+        });
+
+        // Optional configuration for generation (adjust as needed)
+
+        try {
+          const result = await model.generateContent(prompt);
+          const response = await result.response; // Access generated text from the response (structure might differ)
+          console.log(response);
+          console.log("Generated text:", response.text());
+          res.status(200).json({
+            data: response.text(),
+            dataDup: Strings,
+          }); // Try different properties based on documentation
+        } catch (error) {
+          console.error("Error:", error);
+          res.status(400).json({ data: error });
+        }
       } catch (error) {
         console.error(error);
       }
