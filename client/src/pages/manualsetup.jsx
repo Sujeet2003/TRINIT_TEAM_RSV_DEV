@@ -148,6 +148,9 @@ export const Manual = () => {
         >
           <button clas>Add Question</button>
         </div>
+        <div className="flex flex-row items-center justify-center text-purple-600">
+          <button>Submit</button>
+        </div>
       </div>
     </div>
   );
