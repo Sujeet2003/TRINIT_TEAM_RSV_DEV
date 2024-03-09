@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 
@@ -75,6 +75,7 @@ export const Manual = () => {
         {question &&
           question.map((questions, index) => {
             return (
+              <>
               <div className="flex flex-col items-center justify-center">
                 <TextField
                   className="w-full"
@@ -112,13 +113,14 @@ export const Manual = () => {
                   </button>
                 </div>
               </div>
+              </>
             );
           })}
         <div
           className="flex flex-row items-center justify-center w-full mt-5 mb-5"
           onClick={AddQuestion}
         >
-          <button clas>Add Question</button>
+          <button>Add Question</button>
         </div>
       </div>
     </div>

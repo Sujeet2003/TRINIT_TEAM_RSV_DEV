@@ -3,11 +3,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Card from "@mui/material/Card"
+import Box from "@mui/material/Box"
 
 export default function FAQ() {
   return (
-    <Card className='p-7'>
+    <Box className='p-7' >
         <Typography variant='h5' sx={{
             m:1
         }}>Frequently asked quetions?</Typography>
@@ -41,6 +41,6 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </Card>
+    </Box>
   );
 }

@@ -4,8 +4,8 @@ import Typography from '@mui/material/CardContent'
 
 const Desc = () => {
   return (
-    <div className="h-[40vh] my-4">
-      <Card className="m-4 text-xl">
+    <div className="h-[40vh] my-4 ">
+      <Card className="m-4 text-xl" >
         <CardContent>
           Welcome to [Your App Name], the ultimate test generator designed to simplify  the process of creating and taking assessments. Whether you're an educator,  trainer, or simply someone looking to evaluate knowledge, our user-friendly  platform empowers you to craft customized tests effortlessly. Say goodbye to   manual question creation and embrace a seamless, efficient testing  experience with our comprehensive test generator.
         </CardContent>
