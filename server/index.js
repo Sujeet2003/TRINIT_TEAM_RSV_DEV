@@ -3,11 +3,16 @@ import cors from "cors";
 import pool from "./db.js";
 import multer from "multer";
 import dotenv from "dotenv";
-import path, { dirname } from "path";
+import path from "path";
 import fs from "fs";
+import axios from "axios";
+import { ocrSpace } from "ocr-space-api-wrapper";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 const UploadMiddleware = multer({ dest: "uploads/" });
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
@@ -19,8 +24,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-// const storage = multer.memoryStorage(); // Store the file in memory
-// const upload = multer({ storage: storage });
 
 app.use(express.json());
 
@@ -32,21 +35,6 @@ app.get("/", async (req, res) => {
     console.error(error.message);
   }
 });
-
-// app.post("/upload", upload.single("pdfFile"), (req, res) => {
-//   try {
-//     const fileBuffer = req.file.buffer;
-//     console.log("File received:");
-//     // Here, you can process the fileBuffer (which contains the uploaded PDF file)
-
-//     // For demonstration purposes, we'll send back a simple response with the file name
-//     const fileName = req.file.originalname;
-//     res.json({ fileName });
-//   } catch (error) {
-//     console.error("Error handling file upload:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 app.post("/upload", UploadMiddleware.single("pdfFile"), async (req, res) => {
   console.log(req.body);
@@ -60,9 +48,21 @@ app.post("/upload", UploadMiddleware.single("pdfFile"), async (req, res) => {
       const extension = parts[parts.length - 1];
       const newPath = path + "." + extension;
       fs.renameSync(path, newPath);
-      res.status(200).json({ data: newPath });
+
+      const imgPath = newPath;
+      console.log("Hello", imgPath);
+      const apiKey = "K86519444388957";
+
+      try {
+        const res2 = await ocrSpace(imgPath, {
+          apiKey: "K86519444388957",
+        });
+        res.status(200).json({ data: res2 });
+      } catch (error) {
+        console.error(error);
+      }
     } catch (error) {
-      res.status(403).json({ data: error });
+      res.status(400).json({ data: error });
     }
   }
 });
@@ -86,7 +86,6 @@ app.post("/upload1", UploadMiddleware.single("pdfFile1"), async (req, res) => {
   }
 });
 
-
 app.listen(process.env.PORT, () => {
-  console.log("Server is running on port 5000");
+  console.log("Server is running on port 3000");
 });
