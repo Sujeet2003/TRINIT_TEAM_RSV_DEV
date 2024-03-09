@@ -11,27 +11,29 @@ export const Manual = () => {
   ]);
 
   const AddQuestion = () => {
-    setQuestion((prev) => {
-      prev.push({
+    setQuestion((prev) => [
+      ...prev,
+      {
         question: "",
         option: [{ Option1: "" }],
-      });
-    });
+      },
+    ]);
   };
 
   const AddOption = (ev) => {
     console.log(ev.target.value);
     const index = ev.target.value;
-    setQuestion((prevState) => {
-      const updatedQuestions = [...prevState];
-      updatedQuestions[index] = {
-        ...updatedQuestions[index],
+
+    setQuestion((prev) => {
+      const newArray = [...prev];
+      newArray[index] = {
+        ...newArray[index],
         option: [
-          ...updatedQuestions[index].option,
+          ...newArray[index].option,
           { [`Option${question[index].option.length + 1}`]: "" },
         ],
       };
-      return updatedQuestions;
+      return newArray;
     });
 
     console.log(question);
@@ -81,7 +83,12 @@ export const Manual = () => {
               </div>
             );
           })}
-        {}
+        <div
+          className="flex flex-row items-center justify-center w-full mt-5 mb-5"
+          onClick={AddQuestion}
+        >
+          <button clas>Add Question</button>
+        </div>
       </div>
     </div>
   );
