@@ -3,18 +3,21 @@
 @tailwind utilities;
 /* src/index.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 .gradient {
-    @apply bg-gradient-to-r from-pink-600 via-violet-500 to-blue-400;
+  @apply bg-gradient-to-r from-pink-600 via-violet-500 to-blue-400;
 }
 
 .heroGradient {
-    @apply bg-gradient-to-r from-blue-950 to-[#800578];
+  @apply bg-gradient-to-r from-blue-950 to-[#800578];
 }
 
-.cardHolder  h1 {
-    font-size: 20px;
-    font-weight: bold;
-    
+.cardHolder h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+button > * {
+  pointer-events: none;
 }
