@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -8,9 +9,11 @@ const Hero = () => {
         <p className="text-4xl mb-6 text-white leading-10">
           Your Ultimate Test Generator for Effortless Assessments
         </p>
-        <Button variant="contained" className="gradient" sx={{ fontSize: "20px" }}>
-          Get Started Now
-        </Button>
+        <Link to={"/create"}>
+          <Button variant="contained" className="gradient" sx={{  fontSize: "20px" }}>
+              Get Started Now
+          </Button>
+        </Link>
       </div>
     </div>
   );
