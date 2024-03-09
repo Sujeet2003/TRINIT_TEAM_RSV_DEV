@@ -6,7 +6,8 @@ import Typography from '@mui/joy/Typography';
 
 export default function Guide() {
   return (
-    <Card className='mt-52 mx-4'>
+    <Card className='mt-72 mx-28'>
+    <h1 className='text-3xl font-bold mb-4'>User Guide</h1>
     <Box
       component="ul"
       sx={{ display: 'flex',alignItems:"center",justifyContent:"center", gap: 2,}}

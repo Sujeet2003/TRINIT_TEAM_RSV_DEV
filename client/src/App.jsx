@@ -4,7 +4,6 @@ import { LandingPage } from "./pages/landingpage";
 import { Layout } from "./Layout/frame";
 import { Manual } from "./pages/manualsetup";
 import CreateTestPage from "./pages/CreateTestPage";
-import {Link} from "react-router-dom"
 
 function App() {
   return (
