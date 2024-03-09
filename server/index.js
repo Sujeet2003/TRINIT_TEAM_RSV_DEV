@@ -54,10 +54,35 @@ app.post("/upload", UploadMiddleware.single("pdfFile"), async (req, res) => {
       const apiKey = "K86519444388957";
 
       try {
-        const res2 = await ocrSpace(imgPath, {
+        const apiResponse = await ocrSpace(imgPath, {
           apiKey: "K86519444388957",
         });
-        res.status(200).json({ data: res2 });
+
+        const parsedResults = JSON.stringify(apiResponse.ParsedResults);
+        let questions = [];
+        let options = [];
+        const parsedText = JSON.parse(parsedResults);
+        // Extract questions from ParsedText
+        console.log(parsedText[0].ParsedText);
+        const questionMatches = parsedText[0].ParsedText.match(
+          /(\d+\.\s.*?)(?=\d+\.\s|$)/g
+        );
+        if (questionMatches) {
+          questions = questions.concat(questionMatches);
+        }
+
+        // Extract options from ParsedText
+        const optionMatches = parsedText[0].ParsedText.match(
+          /[A-D]\.\s(.*?)(?=[A-D]\.\s|$)/g
+        );
+        if (optionMatches) {
+          options = options.concat(optionMatches);
+        }
+
+        // Log the generated arrays
+        console.log("Questions:", questions);
+        console.log("Options:", options);
+        res.status(200).json({ data: apiResponse });
       } catch (error) {
         console.error(error);
       }

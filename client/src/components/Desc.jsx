@@ -7,7 +7,7 @@ const Desc = () => {
     <div className="h-[40vh] my-4 mx-28 mb-8">
       <Card className="m-4 text-md hover:shadow-lg hover:shadow-purple-400 rounded-2xl">
         <CardContent>
-          Welcome to App, the ultimate test generator designed to simplify  the process of creating and taking assessments. Whether you're an educator,  trainer, or simply someone looking to evaluate knowledge, our user-friendly  platform empowers you to craft customized tests effortlessly. Say goodbye to   manual question creation and embrace a seamless, efficient testing  experience with our comprehensive test generator.
+          Welcome to ExamEase, the ultimate test generator designed to simplify  the process of creating and taking assessments. Whether you're an educator,  trainer, or simply someone looking to evaluate knowledge, our user-friendly  platform empowers you to craft customized tests effortlessly. Say goodbye to   manual question creation and embrace a seamless, efficient testing  experience with our comprehensive test generator.
         </CardContent>
       </Card>
 
